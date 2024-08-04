@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const fetchHNStories = async () => {
   const response = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=100');
@@ -24,8 +25,11 @@ const Index = () => {
   ) || [];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">Hacker News Top 100</h1>
+    <div className="min-h-screen bg-background text-foreground p-8">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold">Hacker News Top 100</h1>
+        <ThemeToggle />
+      </div>
       <Input
         type="text"
         placeholder="Search stories..."
@@ -47,9 +51,9 @@ const Index = () => {
       {!isLoading && !error && (
         <div className="space-y-4">
           {filteredStories.map((story) => (
-            <div key={story.objectID} className="bg-white p-4 rounded-lg shadow">
+            <div key={story.objectID} className="bg-card text-card-foreground p-4 rounded-lg shadow">
               <h2 className="text-xl font-semibold mb-2">{story.title}</h2>
-              <p className="text-gray-600 mb-2">Upvotes: {story.points}</p>
+              <p className="text-muted-foreground mb-2">Upvotes: {story.points}</p>
               <Button
                 variant="outline"
                 size="sm"
